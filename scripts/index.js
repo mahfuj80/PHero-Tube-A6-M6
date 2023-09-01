@@ -13,3 +13,5 @@ Promise.all([category, all, music, comedy, drawing])
     .catch(error => {
         console.error(error);
     });
+
+// Showing all Data by default
