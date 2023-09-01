@@ -1,17 +1,31 @@
 // all category data in one array:
-const category = fetch('https://openapi.programming-hero.com/api/videos/categories').then(response => response.json());
-const all = fetch('https://openapi.programming-hero.com/api/videos/category/1000').then(response => response.json());
-const music = fetch('https://openapi.programming-hero.com/api/videos/category/1001').then(response => response.json());
-const comedy = fetch('https://openapi.programming-hero.com/api/videos/category/1003').then(response => response.json());
-const drawing = fetch('https://openapi.programming-hero.com/api/videos/category/1005').then(response => response.json());
-
-Promise.all([category, all, music, comedy, drawing])
-    .then(([category, all, music, comedy, drawing]) => {
-
-        console.log(category, all, music, comedy, drawing);
-    })
-    .catch(error => {
-        console.error(error);
+async function fetchUrl() {
+    const categoryNameResponse = await fetch('https://openapi.programming-hero.com/api/videos/categories');
+    const categoriesName = await categoryNameResponse.json();
+    // Pass category to the category Name section;
+    createCategoryItem(categoriesName.data);
+};
+// Dynamic Category;
+const createCategoryItem = (categoriesName) => {
+    const categoryContainer = document.getElementById('category-container');
+    categoriesName.forEach(category => {
+        const button = document.createElement('div')
+        button.innerHTML = `
+        <button onclick="categoryDisplay(${category.category_id})" id="${category.category_id}"
+                class="outline-none py-2 rounded-lg px-5 text-black bg-[#25252526] focus:bg-[#FF1F3D] focus:font-semibold focus:text-white">${category.category}</button>
+        `
+        categoryContainer.appendChild(button);
     });
+    document.getElementById('1000').focus();
+    document.getElementById('1000').click();
+}
 
-// Showing all Data by default
+async function categoryDisplay(key) {
+    const id = key.toString();
+    const singleCategoryResponse = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
+    const singleCategory = await singleCategoryResponse.json();
+    const isDataAvailable = singleCategory.status;
+    // console.log(typeof isDataAvailable);
+}
+
+fetchUrl();
