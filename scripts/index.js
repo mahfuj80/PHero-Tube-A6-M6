@@ -20,8 +20,9 @@ const createCategoryItem = (categoriesName) => {
     document.getElementById('1000').focus();
     // clicking it to show all category as default;
     document.getElementById('1000').click();
-}
+};
 
+// Dynamic Category Item;
 let rememberKey = '';
 async function categoryDisplay(key, isShort = 0) {
     // Need Previous key for Shorting by view;
@@ -88,6 +89,6 @@ async function categoryDisplay(key, isShort = 0) {
         });
     };
     // console.log(typeof isDataAvailable);
-}
+};
 
 fetchUrl();
