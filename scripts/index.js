@@ -56,7 +56,11 @@ async function categoryDisplay(key, isShort = 0) {
         cardContainer.innerHTML = '';
         // getting the array for run forEach loop and showing the data;
         const singleCategoryItems = singleCategory.data;
+        let date = 2342
         singleCategoryItems.forEach(singleItems => {
+            const postDate = parseInt(singleItems?.others?.posted_date);
+            const hours = Math.floor(postDate / 3600);
+            const minutes = Math.floor((postDate % 3600) / 60);
             const card = document.createElement('div');
             card.innerHTML = `
                 <!-- Card Start -->
@@ -72,21 +76,82 @@ async function categoryDisplay(key, isShort = 0) {
                             </h2>
                             <div class="flex gap-2 items-center">
                                 <p class="flex-initial text-[#171717b3]">${singleItems?.authors[0]?.profile_name}</p>
-                                ${singleItems?.authors[0]?.verified ? '<i class="fa-solid fa-circle-check" style="color: #3881ff;"></i>' : false}
+                                ${singleItems?.authors[0]?.verified ? '<i class="fa-solid fa-circle-check" style="color: #3881ff;"></i>' : ''}
                             </div>
                             <p class="text-[#171717b3]">${singleItems?.others?.views} views</p>
                         </div>
                     </div>
-                    <div
-                        class="absolute text-white font-light px-3 py-1 rounded bg-[#171717] top-[45%] right-5 md:top-[35%] lg:top-[45%]">
-                        ${singleItems?.others?.posted_date}
+                    <div id="${date}"
+                    class="absolute text-white font-light px-3 py-1 rounded bg-[#171717] top-[45%] right-5 md:top-[35%] lg:top-[45%]">
+                    ${hours + " hrs " + minutes + " min ago"}
                     </div>
                 </div>
                 <!-- Card End -->
             `;
             cardContainer.appendChild(card);
             // console.log(singleItems.thumbnail);
+            // singleItems?.others?.posted_date ?  : document.getElementById('').classList.add('hidden');
+            if (singleItems?.others?.posted_date) {
+                console.log(date);
+                document.getElementById(date).classList.remove('hidden')
+            } else {
+                document.getElementById(date).classList.add('hidden')
+                console.log(document.getElementById(date + '1'));
+            }
+            date++;
         });
+        if (isShort) {
+            cardContainer.innerHTML = '';
+            // let viewArray = [];
+            singleCategoryItems.sort((a, b) => {
+                a = parseFloat(a?.others?.views.split('').slice(0, 3).join(''))
+                b = parseFloat(b?.others?.views.split('').slice(0, 3).join(''))
+                return b - a;
+            });
+            singleCategoryItems.forEach(singleItems => {
+                const postDate = parseInt(singleItems?.others?.posted_date);
+                const hours = Math.floor(postDate / 3600);
+                const minutes = Math.floor((postDate % 3600) / 60);
+                const card = document.createElement('div');
+                card.innerHTML = `
+                    <!-- Card Start -->
+                    <div class="card relative">
+                        <figure><img class="rounded-xl w-[100%] md:w-[400px] md:h-[224px]" src="${singleItems?.thumbnail}" alt="Shoes" /></figure>
+                        <div class="card-body flex flex-row items-start gap-5 px-0">
+                            <div>
+                                <img flex-row class=" h-[60px] w-16 rounded-full" src="${singleItems?.authors[0]?.profile_picture}"
+                                    alt="icon">
+                            </div>
+                            <div class="space-y-2">
+                                <h2 class="card-title font-bold text-black">${singleItems?.title}
+                                </h2>
+                                <div class="flex gap-2 items-center">
+                                    <p class="flex-initial text-[#171717b3]">${singleItems?.authors[0]?.profile_name}</p>
+                                    ${singleItems?.authors[0]?.verified ? '<i class="fa-solid fa-circle-check" style="color: #3881ff;"></i>' : ''}
+                                </div>
+                                <p class="text-[#171717b3]">${singleItems?.others?.views} views</p>
+                            </div>
+                        </div>
+                        <div id="${date}"
+                        class="absolute text-white font-light px-3 py-1 rounded bg-[#171717] top-[45%] right-5 md:top-[35%] lg:top-[45%]">
+                        ${hours + " hrs " + minutes + " min ago"}
+                        </div>
+                    </div>
+                    <!-- Card End -->
+                `;
+                cardContainer.appendChild(card);
+                // console.log(singleItems.thumbnail);
+                // singleItems?.others?.posted_date ?  : document.getElementById('').classList.add('hidden');
+                if (singleItems?.others?.posted_date) {
+                    console.log(date);
+                    document.getElementById(date).classList.remove('hidden')
+                } else {
+                    document.getElementById(date).classList.add('hidden')
+                    console.log(document.getElementById(date + '1'));
+                }
+                date++;
+            });
+        }
     };
     // console.log(typeof isDataAvailable);
 };
