@@ -61,25 +61,25 @@ async function categoryDisplay(key, isShort = 0) {
             card.innerHTML = `
                 <!-- Card Start -->
                 <div class="card relative">
-                    <figure><img class="rounded-xl w-[100%] md:w-[400px] md:h-[224px]" src="${singleItems.thumbnail}" alt="Shoes" /></figure>
+                    <figure><img class="rounded-xl w-[100%] md:w-[400px] md:h-[224px]" src="${singleItems?.thumbnail}" alt="Shoes" /></figure>
                     <div class="card-body flex flex-row items-start gap-5 px-0">
                         <div>
-                            <img flex-row class=" h-[60px] w-16 rounded-full" src="${singleItems.authors[0].profile_picture}"
+                            <img flex-row class=" h-[60px] w-16 rounded-full" src="${singleItems?.authors[0]?.profile_picture}"
                                 alt="icon">
                         </div>
                         <div class="space-y-2">
-                            <h2 class="card-title font-bold text-black">${singleItems.title}
+                            <h2 class="card-title font-bold text-black">${singleItems?.title}
                             </h2>
                             <div class="flex gap-2 items-center">
-                                <p class="flex-initial text-[#171717b3]">${singleItems.authors[0].profile_name}</p>
-                                <i class="fa-solid fa-circle-check" style="color: #3881ff;"></i>
+                                <p class="flex-initial text-[#171717b3]">${singleItems?.authors[0]?.profile_name}</p>
+                                ${singleItems?.authors[0]?.verified ? '<i class="fa-solid fa-circle-check" style="color: #3881ff;"></i>' : false}
                             </div>
-                            <p class="text-[#171717b3]">${singleItems.others.views} views</p>
+                            <p class="text-[#171717b3]">${singleItems?.others?.views} views</p>
                         </div>
                     </div>
                     <div
                         class="absolute text-white font-light px-3 py-1 rounded bg-[#171717] top-[45%] right-5 md:top-[35%] lg:top-[45%]">
-                        ${singleItems.others.posted_date}
+                        ${singleItems?.others?.posted_date}
                     </div>
                 </div>
                 <!-- Card End -->
